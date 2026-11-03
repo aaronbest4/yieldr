@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DATABASE_URL: postgres://yieldr:yieldr@localhost:5432/yieldr
+  BETTER_AUTH_SECRET: ci-only-secret-not-used-anywhere-else-0123456789
+  BETTER_AUTH_URL: http://localhost:3000
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: Lint, typecheck, unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            package.json
+      - name: Install
+        run: |
+          if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install --no-frozen-lockfile; fi
+      - name: Upload lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: pnpm-lock
+          path: pnpm-lock.yaml
+      - name: Lint and format
+        run: |
+          pnpm exec biome check --write . || true
+          git diff > format.patch
+          pnpm lint
+          git diff --exit-code || (echo "::error::Files are not formatted. Run pnpm format and commit." && exit 1)
+      - name: Upload format patch
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: format-patch
+          path: format.patch
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  e2e:
+    name: Migrations, build, end-to-end
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: yieldr
+          POSTGRES_PASSWORD: yieldr
+          POSTGRES_DB: yieldr
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U yieldr"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            package.json
+      - name: Install
+        run: |
+          if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install --no-frozen-lockfile; fi
+      - name: Migrations are up to date with the schema
+        run: |
+          committed=$([ -d packages/db/migrations ] && echo yes || echo no)
+          pnpm db:generate
+          if [ "$committed" = yes ]; then
+            git add -N packages/db/migrations
+            git diff --exit-code -- packages/db/migrations || (echo "::error::Schema changed without a migration. Run pnpm db:generate and commit." && exit 1)
+          else
+            echo "::warning::No committed migrations yet; using freshly generated ones."
+          fi
+      - name: Upload generated migrations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: migrations
+          path: packages/db/migrations
+      - run: pnpm db:migrate
+      - run: pnpm build
+      - name: Install Playwright browser
+        run: pnpm --filter @yieldr/web exec playwright install --with-deps chromium
+      - run: pnpm e2e
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report

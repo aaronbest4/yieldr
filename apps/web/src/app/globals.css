@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/*
+ * Yieldr brand tokens. Source of truth: the Yieldr design system (tokens.json).
+ * Light values on :root; dark values for the OS setting and for an explicit data-theme="dark".
+ */
+:root {
+  --surface-100: #f2f1ea;
+  --surface-200: #fbfaf6;
+  --line: #d6d3c6;
+  --line-strong: #7f877a;
+  --ink: #1f2e26;
+  --ink-muted: #5b6658;
+  --brand: #3a5a40;
+  --brand-strong: #344e41;
+  --on-brand: #ffffff;
+  --fern: #588157;
+  --sage: #a3b18a;
+  --bone: #dad7cd;
+  --brand-tint: #dfe5d2;
+  --wattle: #d9a62e;
+  --on-wattle: #2b2105;
+  --gain: #2f6690;
+  --cost: #a14d26;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-100: #131a15;
+    --surface-200: #1b241e;
+    --line: #2f3b33;
+    --line-strong: #6b7866;
+    --ink: #ecebe3;
+    --ink-muted: #a9b29f;
+    --brand: #a3b18a;
+    --brand-strong: #b9c5a3;
+    --on-brand: #17231a;
+    --fern: #7fa076;
+    --sage: #6f7f5c;
+    --bone: #3d4338;
+    --brand-tint: #283829;
+    --wattle: #e6bb4f;
+    --on-wattle: #2b2105;
+    --gain: #8fb8da;
+    --cost: #e69a6e;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface-100: #131a15;
+  --surface-200: #1b241e;
+  --line: #2f3b33;
+  --line-strong: #6b7866;
+  --ink: #ecebe3;
+  --ink-muted: #a9b29f;
+  --brand: #a3b18a;
+  --brand-strong: #b9c5a3;
+  --on-brand: #17231a;
+  --fern: #7fa076;
+  --sage: #6f7f5c;
+  --bone: #3d4338;
+  --brand-tint: #283829;
+  --wattle: #e6bb4f;
+  --on-wattle: #2b2105;
+  --gain: #8fb8da;
+  --cost: #e69a6e;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-surface: var(--surface-100);
+  --color-raised: var(--surface-200);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-on-brand: var(--on-brand);
+  --color-fern: var(--fern);
+  --color-sage: var(--sage);
+  --color-bone: var(--bone);
+  --color-brand-tint: var(--brand-tint);
+  --color-wattle: var(--wattle);
+  --color-on-wattle: var(--on-wattle);
+  --color-gain: var(--gain);
+  --color-cost: var(--cost);
+
+  --font-display: var(--font-bricolage), "Avenir Next", system-ui, sans-serif;
+  --font-sans: var(--font-plex), "Segoe UI", system-ui, sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+}
+
+@layer base {
+  body {
+    background: var(--surface-100);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  .figure {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
