@@ -1,0 +1,25 @@
+{
+  "name": "yieldr",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "db:generate": "pnpm --filter @yieldr/db generate",
+    "db:migrate": "pnpm --filter @yieldr/db migrate",
+    "db:studio": "pnpm --filter @yieldr/db studio",
+    "e2e": "pnpm --filter @yieldr/web e2e"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.9.0"
+  }
+}

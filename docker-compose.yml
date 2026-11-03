@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: yieldr
+      POSTGRES_PASSWORD: yieldr
+      POSTGRES_DB: yieldr
+    ports:
+      - "5432:5432"
+    volumes:
+      - yieldr-pg:/var/lib/postgresql/data
+
+volumes:
+  yieldr-pg:
