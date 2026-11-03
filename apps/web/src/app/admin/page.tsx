@@ -23,8 +23,12 @@ export default async function AdminHome() {
       <dl className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
         {tiles.map((tile) => (
           <div key={tile.label} className="rounded-lg border border-line bg-raised p-6">
-            <dt className="text-xs font-semibold uppercase tracking-[0.06em] text-ink-muted">{tile.label}</dt>
-            <dd className="figure mt-2 font-display text-[40px] font-bold leading-[44px]">{tile.value}</dd>
+            <dt className="text-xs font-semibold uppercase tracking-[0.06em] text-ink-muted">
+              {tile.label}
+            </dt>
+            <dd className="figure mt-2 font-display text-[40px] font-bold leading-[44px]">
+              {tile.value}
+            </dd>
           </div>
         ))}
       </dl>

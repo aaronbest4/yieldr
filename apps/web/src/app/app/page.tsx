@@ -19,8 +19,8 @@ export default async function AppHome() {
       <section className="flex flex-col items-start gap-3 rounded-lg border border-dashed border-line-strong bg-raised p-8">
         <h2 className="text-[22px] font-semibold leading-7">No properties yet</h2>
         <p className="max-w-[60ch] text-ink-muted">
-          Adding investors and properties arrives in the next phase. You'll enter each property
-          once and see its projection on its own and within your whole portfolio.
+          Adding investors and properties arrives in the next phase. You'll enter each property once
+          and see its projection on its own and within your whole portfolio.
         </p>
       </section>
     </div>

@@ -4,11 +4,11 @@ Property investment projections for Australian investors and their advisers, at 
 
 ## What's here
 
-| Path | What |
-| --- | --- |
-| `apps/web` | Next.js app: the public site at `/`, sign-in at `/sign-in`, the app at `/app`, super-admin at `/admin` |
-| `packages/engine` | The calculation engine: pure TypeScript, no framework or database code, fully unit tested |
-| `packages/db` | Postgres schema (Drizzle ORM) and migrations |
+| Path              | What                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| `apps/web`        | Next.js app: the public site at `/`, sign-in at `/sign-in`, the app at `/app`, super-admin at `/admin` |
+| `packages/engine` | The calculation engine: pure TypeScript, no framework or database code, fully unit tested              |
+| `packages/db`     | Postgres schema (Drizzle ORM) and migrations                                                           |
 
 Sign-in uses [Better Auth](https://www.better-auth.com) with Google, Microsoft and email magic links. Organisations, members and roles come from its organization plugin. Super-admin, banning and impersonation come from its admin plugin.
 
@@ -28,15 +28,15 @@ Without Google or Microsoft keys, only the email option shows on the sign-in pag
 
 ## Commands
 
-| Command | Does |
-| --- | --- |
-| `pnpm dev` | Runs the app with hot reload |
-| `pnpm test` | Engine unit tests (Vitest) |
-| `pnpm e2e` | End-to-end tests (Playwright) against a running Postgres |
-| `pnpm lint` / `pnpm format` | Biome lint and format check / fix |
-| `pnpm typecheck` | TypeScript across the workspace |
-| `pnpm db:generate` | Creates a migration after a schema change. Commit the result. |
-| `pnpm db:migrate` | Applies migrations to `DATABASE_URL` |
+| Command                     | Does                                                          |
+| --------------------------- | ------------------------------------------------------------- |
+| `pnpm dev`                  | Runs the app with hot reload                                  |
+| `pnpm test`                 | Engine unit tests (Vitest)                                    |
+| `pnpm e2e`                  | End-to-end tests (Playwright) against a running Postgres      |
+| `pnpm lint` / `pnpm format` | Biome lint and format check / fix                             |
+| `pnpm typecheck`            | TypeScript across the workspace                               |
+| `pnpm db:generate`          | Creates a migration after a schema change. Commit the result. |
+| `pnpm db:migrate`           | Applies migrations to `DATABASE_URL`                          |
 
 CI runs all of these on every pull request, including the sign-up, sign-in, sign-out and admin-access tests against a real Postgres.
 

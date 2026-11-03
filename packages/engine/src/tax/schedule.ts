@@ -23,7 +23,8 @@ export interface ResidentTaxSchedule {
   source: string;
 }
 
-const STAGE_3_SOURCE = "https://www.legislation.gov.au/C2025A00028/asmade/2025-03-27/text/original/word";
+const STAGE_3_SOURCE =
+  "https://www.legislation.gov.au/C2025A00028/asmade/2025-03-27/text/original/word";
 
 export const residentTaxSchedules: ResidentTaxSchedule[] = [
   {

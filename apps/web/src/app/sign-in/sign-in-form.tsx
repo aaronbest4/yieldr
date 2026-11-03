@@ -4,7 +4,11 @@ import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import type { EnabledProviders } from "@/lib/providers";
 
-type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent"; email: string } | { kind: "error"; message: string };
+type Status =
+  | { kind: "idle" }
+  | { kind: "sending" }
+  | { kind: "sent"; email: string }
+  | { kind: "error"; message: string };
 
 export function SignInForm({ providers, next }: { providers: EnabledProviders; next: string }) {
   const [email, setEmail] = useState("");
@@ -20,7 +24,10 @@ export function SignInForm({ providers, next }: { providers: EnabledProviders; n
     setStatus({ kind: "sending" });
     const { error } = await authClient.signIn.magicLink({ email, callbackURL: next });
     if (error) {
-      setStatus({ kind: "error", message: error.message ?? "We couldn't send the link. Try again." });
+      setStatus({
+        kind: "error",
+        message: error.message ?? "We couldn't send the link. Try again.",
+      });
     } else {
       setStatus({ kind: "sent", email });
     }
@@ -28,10 +35,14 @@ export function SignInForm({ providers, next }: { providers: EnabledProviders; n
 
   if (status.kind === "sent") {
     return (
-      <div role="status" className="flex flex-col gap-2 rounded-lg border border-line bg-raised p-6">
+      <div
+        role="status"
+        className="flex flex-col gap-2 rounded-lg border border-line bg-raised p-6"
+      >
         <h2 className="text-[22px] font-semibold leading-7">Check your email</h2>
         <p className="text-ink-muted">
-          We sent a sign-in link to <strong className="text-ink">{status.email}</strong>. It expires in 15 minutes.
+          We sent a sign-in link to <strong className="text-ink">{status.email}</strong>. It expires
+          in 15 minutes.
         </p>
         <button
           type="button"
@@ -80,7 +91,10 @@ export function SignInForm({ providers, next }: { providers: EnabledProviders; n
       )}
 
       <form onSubmit={sendLink} className="flex flex-col gap-3">
-        <label htmlFor="email" className="text-xs font-semibold uppercase tracking-[0.06em] text-ink-muted">
+        <label
+          htmlFor="email"
+          className="text-xs font-semibold uppercase tracking-[0.06em] text-ink-muted"
+        >
           Email
         </label>
         <input

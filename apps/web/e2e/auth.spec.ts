@@ -3,9 +3,7 @@ import { signInWithMagicLink, uniqueEmail } from "./helpers";
 
 test("the homepage shows the product and pricing", async ({ page }) => {
   await page.goto("/");
-  await expect(
-    page.getByRole("heading", { level: 1, name: /really costs you/ }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: /really costs you/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Pricing" })).toBeVisible();
   await expect(page.getByText("Prices include GST")).toBeVisible();
 });

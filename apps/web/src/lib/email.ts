@@ -32,7 +32,10 @@ export async function sendEmail(email: Email): Promise<void> {
       throw new Error("EMAIL_TRANSPORT=file is for local development and tests only.");
     }
     await mkdir(path.dirname(OUTBOX_PATH), { recursive: true });
-    await appendFile(OUTBOX_PATH, `${JSON.stringify({ ...email, sentAt: new Date().toISOString() })}\n`);
+    await appendFile(
+      OUTBOX_PATH,
+      `${JSON.stringify({ ...email, sentAt: new Date().toISOString() })}\n`,
+    );
     return;
   }
 

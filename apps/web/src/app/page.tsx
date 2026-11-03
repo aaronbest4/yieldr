@@ -45,7 +45,10 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between py-4">
           <Logo />
           <nav className="flex items-center gap-3">
-            <Link href="/sign-in" className="rounded-md px-3 py-2 font-medium text-ink hover:bg-brand-tint">
+            <Link
+              href="/sign-in"
+              className="rounded-md px-3 py-2 font-medium text-ink hover:bg-brand-tint"
+            >
               Sign in
             </Link>
             <Link
@@ -78,7 +81,10 @@ export default function HomePage() {
               >
                 Start a 3-day free trial
               </Link>
-              <a href="#pricing" className="rounded-md border border-line-strong px-5 py-3 font-medium">
+              <a
+                href="#pricing"
+                className="rounded-md border border-line-strong px-5 py-3 font-medium"
+              >
                 See pricing
               </a>
             </div>
@@ -138,8 +144,13 @@ export default function HomePage() {
               >
                 <h3 className="text-[22px] font-semibold leading-7">{plan.name}</h3>
                 <p className="figure">
-                  <span className="font-display text-[40px] font-bold leading-[44px]">${plan.monthly}</span>
-                  <span className="text-ink-muted"> /month{plan.perUser ? " per adviser" : ""}</span>
+                  <span className="font-display text-[40px] font-bold leading-[44px]">
+                    ${plan.monthly}
+                  </span>
+                  <span className="text-ink-muted">
+                    {" "}
+                    /month{plan.perUser ? " per adviser" : ""}
+                  </span>
                 </p>
                 <p className="figure text-ink-muted">or ${plan.annual} a year</p>
                 <p>{plan.detail}</p>
