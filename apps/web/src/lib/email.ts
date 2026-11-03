@@ -54,11 +54,10 @@ export async function sendEmail(email: Email): Promise<void> {
   }
 }
 
-const escape = (value: string) =>
-  value.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 export function magicLinkEmail(to: string, url: string): Email {
-  const safeUrl = escape(url);
+  const safeUrl = escapeHtml(url);
   return {
     to,
     subject: "Your Yieldr sign-in link",

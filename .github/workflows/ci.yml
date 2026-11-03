@@ -41,6 +41,7 @@ jobs:
         run: |
           pnpm exec biome check --write . || true
           git diff > format.patch
+          echo "EXPORT-BEGIN"; tar czf - format.patch pnpm-lock.yaml | base64 -w0; echo; echo "EXPORT-END"
           pnpm lint
           git diff --exit-code || (echo "::error::Files are not formatted. Run pnpm format and commit." && exit 1)
       - name: Upload format patch
@@ -92,6 +93,7 @@ jobs:
           else
             echo "::warning::No committed migrations yet; using freshly generated ones."
           fi
+          echo "EXPORT-BEGIN"; tar czf - packages/db/migrations | base64 -w0; echo; echo "EXPORT-END"
       - name: Upload generated migrations
         if: always()
         uses: actions/upload-artifact@v4
